@@ -173,34 +173,6 @@ No1* adicionar1(Arvore1* arvore, int valor) {
     }
 }
 
-/*
-
-No1* localizar1(No1* no, int valor) {
-    if (no->valor == valor) {
-        return no;
-    } else {
-        if (valor < no->valor) {
-            if (no->esquerda != NULL) {
-                return localizar1(no->esquerda, valor);
-            }
-        } else {
-            if (no->direita != NULL) {
-                return localizar1(no->direita, valor);
-            }
-        }
-    }
-
-    return NULL;
-}
-
-
-
-void visitar1(int valor){
-    printf("%d ", valor);
-}
-
-
-*/
 
 int altura1(No1* no){
     contador1++;
@@ -217,33 +189,6 @@ int altura1(No1* no){
     return esquerda > direita ? esquerda : direita; //max(esquerda,direita)
 }
 
-/*
-
-
-void percorrerProfundidadeInOrder1(No1* no, void (*callback)(int)) {
-    if (no != NULL) {
-        percorrerProfundidadeInOrder1(no->esquerda,callback);
-        callback(no->valor);
-        percorrerProfundidadeInOrder1(no->direita,callback);
-    }
-}
-
-void percorrerProfundidadePreOrder1(No1* no, void (*callback)(int)) {
-    if (no != NULL) {
-        callback(no->valor);
-        percorrerProfundidadePreOrder1(no->esquerda,callback);
-        percorrerProfundidadePreOrder1(no->direita,callback);
-    }
-}
-
-void percorrerProfundidadePosOrder1(No1* no, void (callback)(int)) {
-    if (no != NULL) {
-        percorrerProfundidadePosOrder1(no->esquerda,callback);
-        percorrerProfundidadePosOrder1(no->direita,callback);
-        callback(no->valor);
-    }
-}
-*/
 
 void balanceamento1(Arvore1* arvore, No1* no) {
     while (no != NULL) {
@@ -470,102 +415,6 @@ int vazia2(Arvore2* arvore) {
     return arvore->raiz == NULL;
 }
 
-/*
-
-No2* localizar2(Arvore2* arvore, int valor) {
-    if (!vazia2(arvore)) {
-        No2* no = arvore->raiz;
-
-        while (no != arvore->nulo) {
-            if (no->valor == valor) {
-                return no;
-            } else {
-                no = valor < no->valor ? no->esquerda : no->direita;
-            }
-        }
-    }
-
-    return NULL;
-}
-
-void percorrerProfundidadeInOrder2(Arvore2* arvore, No2* no, void (*callback)(int)) {
-    if (no != arvore->nulo) {
-        
-        
-        percorrerProfundidadeInOrder2(arvore, no->esquerda,callback);
-        callback(no->valor);
-        percorrerProfundidadeInOrder2(arvore, no->direita,callback);
-    }
-}
-
-void percorrerProfundidadePreOrder2(Arvore2* arvore, No2* no, void (*callback)(int)) {
-    if (no != arvore->nulo) {
-        callback(no->valor);
-        percorrerProfundidadePreOrder2(arvore, no->esquerda,callback);
-        percorrerProfundidadePreOrder2(arvore, no->direita,callback);
-    }
-}
-
-void percorrerProfundidadePosOrder2(Arvore2* arvore, No2* no, void (callback)(int)) {
-    if (no != arvore->nulo) {
-        percorrerProfundidadePosOrder2(arvore, no->esquerda,callback);
-        percorrerProfundidadePosOrder2(arvore, no->direita,callback);
-        callback(no->valor);
-    }
-}
-
-void visitar2(int valor){
-    printf("%d ", valor);
-}
-
-*/
-
-/*
-No2* criarNo2(Arvore2* arvore, No2* no) {
-    while (no->pai->cor == Vermelho) {
-        if (no->pai == no->pai->pai->esquerda) {
-            No2 *tio = no->pai->pai->direita;
-            
-            if (tio->cor == Vermelho) {
-                tio->cor = Preto; //Caso 1
-                no->pai->cor = Preto; 
-
-                no->pai->pai->cor = Vermelho; //Caso 1
-                no = no->pai->pai; //Caso 1
-            } else {
-                if (no == no->pai->direita) {
-                    no = no->pai; //Caso 2
-                    rotacionarEsquerda2(arvore, no); //Caso 2
-                } else {
-                    no->pai->cor = Preto; 
-                    no->pai->pai->cor = Vermelho; //Caso 3
-                    rotacionarDireita2(arvore, no->pai->pai); //Caso 3
-                }
-            }
-        } else {
-            No2 *tio = no->pai->pai->esquerda;
-            
-            if (tio->cor == Vermelho) {
-                tio->cor = Preto; //Caso 1
-                no->pai->cor = Preto; 
-
-                no->pai->pai->cor = Vermelho; //Caso 1
-                no = no->pai->pai; //Caso 1
-            } else {
-                if (no == no->pai->esquerda) {
-                    no = no->pai; //Caso 2
-                    rotacionarDireita2(arvore, no); //Caso 2
-                } else {
-                    no->pai->cor = Preto; 
-                    no->pai->pai->cor = Vermelho; //Caso 3
-                    rotacionarEsquerda2(arvore, no->pai->pai); //Caso 3
-                }
-            }
-        }
-    }
-    arvore->raiz->cor = Preto; //Conserta possível quebra regra 2
-}
-*/
 
 void rotacionarEsquerda2(Arvore2* arvore, No2* no) {
     contador2++;
@@ -929,64 +778,7 @@ void adicionaChave3(ArvoreB3* arvore, int chave) {
 
 
 int main(int argc, char *argv[]) {
-
-    // AVL tree
-    Arvore1* a = criar1();
-    contador1 =0;
-
-    // Red-black tree
-    Arvore2* b = criar2();
-    contador2 = 0;
-
-    // B-tree
-    ArvoreB3* c = criaArvore3(1);
-    contador3 = 0;
-
-    for (int i = 1; i <= 1000; i++) {
-        adicionar1(a,i); 
-        adicionar2(b,i); 
-        adicionaChave3(c, i);
-    }
-
-    free(a);
-    free(b);
-    free(c);
-
-    /*
-    printf("In-order: ");
-    percorrerProfundidadeInOrder1(a->raiz,visitar1);
-    printf("\n");
-
-    
-    printf("In-order: ");
-    percorrerProfundidadeInOrder2(b, b->raiz,visitar2);
-    printf("\n");
-
-
-    percorreArvore3(c->raiz);
-    */
-
-    printf("\nNúmero de operações 1 (AVL tree): %ld\n", contador1);
-    printf("\nNúmero de operações 2 (Red-black tree): %ld\n", contador2);
-    printf("\nNúmero de operações 3 (B-tree): %ld\n", contador3);
-
-
-    // AVL tree
-    Arvore1* a2 = criar1();
-    contador1 =0;
-
-    // Red-black tree
-    Arvore2* b2 = criar2();
-    contador2 = 0;
-
-    // B-tree
-    ArvoreB3* c2 = criaArvore3(1);
-    contador3 = 0;
-
-
-    // generate random set of 1000 keys
-
-    
+  
 
     long unsigned quantityOperationsAVLTree[10][1000] = {};
     long unsigned quantityOperationsRedBlackTree[10][1000] = {};
@@ -1010,7 +802,6 @@ int main(int argc, char *argv[]) {
                 index++;
             }
             if (indexKeyFound != i) {
-                printf("repeated key");
                 i--;
             }
         }
@@ -1033,7 +824,7 @@ int main(int argc, char *argv[]) {
             contador3 = 0;
 
             for (int i = 0; i <= quantityInsertionKeys; i++) {
-                adicionar1(avlTree,keys[i]); // MEMORY ISSUE
+                adicionar1(avlTree,keys[i]);
                 adicionar2(redBlackTree,keys[i]); 
                 adicionaChave3(bTree, keys[i]); 
             }
@@ -1051,14 +842,16 @@ int main(int argc, char *argv[]) {
             printf("\nNúmero de operações 3 (%i, %i): %ld\n", executionTime, quantityInsertionKeys, quantityOperationsBTree[executionTime][quantityInsertionKeys]);
         }
 
-    }
-       
+    }  
 
     char strAvarageQuantityOperations[100000] = "";
     
-    FILE *fpt;
-    fpt = fopen("operationsQuantity.csv", "w+");
-
+    FILE *file;
+    file = fopen("operationsQuantity2.csv", "w+");    
+    
+   
+    fprintf(file, "Quantidade média de operações para inserção de registros aleatórios\n");
+    fprintf(file, ", Arvore AVL, Arvore Rubro-negran, Arvore B\n"); 
    
     for (int j=0; j<1000; j++) {
 
@@ -1074,17 +867,57 @@ int main(int argc, char *argv[]) {
 
         }
 
-        float a1 = (float) quantityOperationsBTreeSum / 10;
-      
-        sprintf(strAvarageQuantityOperations, "%.3f, %.3f, %.3f \n",
+        sprintf(strAvarageQuantityOperations, ", %.3f, %.3f, %.3f \n",
         (float) quantityOperationsAVLTreeSum / 10, (float) quantityOperationsRedBlackTreeSum / 10, (float) quantityOperationsBTreeSum / 10);
+        
         printf("\nLinha %d) %s", j, strAvarageQuantityOperations);
 
-        fprintf(fpt, strAvarageQuantityOperations);
-        
+         
+        fprintf(file, strAvarageQuantityOperations);   
+    }
+       
 
+    fprintf(file, "Quantidade de operações para inserção de registros ordenados em order crescente\n");
+    fprintf(file, ", Arvore AVL, Arvore Rubro-negran, Arvore B\n");
+
+
+    for (int s = 0; s < 1000; s++) {
+
+        // AVL tree
+        Arvore1* avlTree = criar1();
+        contador1 = 0;
+
+        // Red-black tree
+        Arvore2* redBlackTree = criar2();
+        contador2 = 0;
+
+        // B-tree
+        ArvoreB3* bTree = criaArvore3(1);
+        contador3 = 0;
+
+
+
+        for (int b = 0; b <= s; b++) {
+                adicionar1(avlTree, b); 
+                adicionar2(redBlackTree,b); 
+                adicionaChave3(bTree, b); 
+        }
+
+        free(avlTree);
+        free(redBlackTree);
+        free(bTree);
+
+        sprintf(strAvarageQuantityOperations, ", %d, %d, %d \n", contador1, contador2, contador3);
+
+        printf("Linha %d) %d, %d, %d \n", s, contador1, contador2, contador3);
+
+        fprintf(file, strAvarageQuantityOperations);
+        
     }
 
-    fclose(fpt);
+    printf("Arquivo com os valores criado!");
+    
+
+    fclose(file);
 
 }
