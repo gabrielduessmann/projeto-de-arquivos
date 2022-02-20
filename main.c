@@ -582,23 +582,6 @@ No3* criaNo3(ArvoreB3* arvore) {
 }
 
 
-/*
-void percorreArvore3(No3* no) {
-    if (no != NULL) {
-        for (int i = 0; i < no->total; i++){
-            percorreArvore3(no->filhos[i]); //visita o filho a esquerda
-            
-            printf("%d ",no->chaves[i]);
-        }
-
-        percorreArvore3(no->filhos[no->total]); //visita ultimo filho (direita)
-    }
-}
-
-*/
-
-
-
 int pesquisaBinaria3(No3* no, int chave) {
     int inicio = 0, fim = no->total - 1, meio;		
     
@@ -617,26 +600,6 @@ int pesquisaBinaria3(No3* no, int chave) {
     }
     return inicio; //não encontrou	
 }
-
-/*
-
-int localizaChave3(ArvoreB3* arvore, int chave) {	
-    No3 *no = arvore->raiz;
-    
-    while (no != NULL) {
-        int i = pesquisaBinaria3(no, chave);
-
-        if (i < no->total && no->chaves[i] == chave) {
-            return 1; //encontrou
-        } else {
-            no = no->filhos[i];
-        }
-    }
-
-    return 0; //não encontrou	
-}
-
-*/
 
 
 
@@ -870,9 +833,7 @@ int main(int argc, char *argv[]) {
         sprintf(strAvarageQuantityOperations, ", %.3f, %.3f, %.3f \n",
         (float) quantityOperationsAVLTreeSum / 10, (float) quantityOperationsRedBlackTreeSum / 10, (float) quantityOperationsBTreeSum / 10);
         
-        printf("\nLinha %d) %s", j, strAvarageQuantityOperations);
-
-         
+        printf("\nLinha %d) %s", j, strAvarageQuantityOperations);         
         fprintf(file, strAvarageQuantityOperations);   
     }
        
@@ -915,7 +876,7 @@ int main(int argc, char *argv[]) {
         
     }
 
-    printf("Arquivo com os valores criado!");
+    printf("Arquivo com os valores criado! \n\n");
     
 
     fclose(file);
