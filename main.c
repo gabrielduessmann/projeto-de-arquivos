@@ -810,7 +810,7 @@ int main(int argc, char *argv[]) {
     char strAvarageQuantityOperations[100000] = "";
     
     FILE *file;
-    file = fopen("operationsQuantity2.csv", "w+");    
+    file = fopen("operationsQuantity.csv", "w+");    
     
    
     fprintf(file, "Quantidade média de operações para inserção de registros aleatórios\n");
