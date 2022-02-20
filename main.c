@@ -1,7 +1,8 @@
 #include <stdlib.h>
-#include <stdio.h>
-
-
+#include <stdio.h> 
+#include <stdbool.h>
+#include <time.h>
+#include <string.h>
 
 
 typedef struct no1 {
@@ -124,13 +125,12 @@ void adicionaChave3(ArvoreB3*, int);
  */
 
 
-int contador1 = 0;
+long unsigned contador1 = 0;
 
 No1* adicionarNo1(No1* no, int valor) {
     contador1++;
     if (valor > no->valor) {
         if (no->direita == NULL) {
-            printf("Adicionando %d\n",valor);
             No1* novo = malloc(sizeof(No1));
             novo->valor = valor;
             novo->pai = no;
@@ -143,7 +143,6 @@ No1* adicionarNo1(No1* no, int valor) {
         }
     } else {
         if (no->esquerda == NULL) {
-            printf("Adicionando %d\n",valor);
             No1* novo = malloc(sizeof(No1));
 			novo->valor = valor;
             novo->pai = no;
@@ -160,7 +159,6 @@ No1* adicionarNo1(No1* no, int valor) {
 No1* adicionar1(Arvore1* arvore, int valor) {
     contador1++;
     if (arvore->raiz == NULL) {
-        printf("Adicionando %d\n",valor);
         No1* novo = malloc(sizeof(No1));
         novo->valor = valor;
         
@@ -255,19 +253,15 @@ void balanceamento1(Arvore1* arvore, No1* no) {
         if (fator > 1) { //árvore mais pesada para esquerda
             //rotação para a direita
             if (fb1(no->esquerda) > 0) {
-                printf("RSD(%d)\n",no->valor);
                 rsd1(arvore, no); //rotação simples a direita, pois o FB do filho tem sinal igual
             } else {
-                printf("RDD(%d)\n",no->valor);
                 rdd1(arvore, no); //rotação dupla a direita, pois o FB do filho tem sinal diferente
             }
         } else if (fator < -1) { //árvore mais pesada para a direita
             //rotação para a esquerda
             if (fb1(no->direita) < 0) {
-                printf("RSE(%d)\n",no->valor);
                 rse1(arvore, no); //rotação simples a esquerda, pois o FB do filho tem sinal igual
             } else {
-                printf("RDE(%d)\n",no->valor);
                 rde1(arvore, no); //rotação dupla a esquerda, pois o FB do filho tem sinal diferente
             }
         }
@@ -406,7 +400,7 @@ No1* rdd1(Arvore1* arvore, No1* no) {
  * Red-black tree
  */
 
-int contador2 = 0;
+long unsigned contador2 = 0;
 
 
 Arvore2* criar2() {
@@ -709,7 +703,7 @@ void balancear2(Arvore2* arvore, No2* no) {
  * B-tree
  */ 
 
-int contador3 = 0;
+long unsigned contador3 = 0;
 
 ArvoreB3* criaArvore3(int ordem) {
     ArvoreB3* a = malloc(sizeof(ArvoreB3));
@@ -948,11 +942,15 @@ int main(int argc, char *argv[]) {
     ArvoreB3* c = criaArvore3(1);
     contador3 = 0;
 
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 1000; i++) {
         adicionar1(a,i); 
         adicionar2(b,i); 
         adicionaChave3(c, i);
     }
+
+    free(a);
+    free(b);
+    free(c);
 
     /*
     printf("In-order: ");
@@ -968,7 +966,125 @@ int main(int argc, char *argv[]) {
     percorreArvore3(c->raiz);
     */
 
-    printf("\nNúmero de operações 1: %d\n", contador1);
-    printf("\nNúmero de operações 2: %d\n", contador2);
-    printf("\nNúmero de operações 3: %d\n", contador3);
+    printf("\nNúmero de operações 1 (AVL tree): %ld\n", contador1);
+    printf("\nNúmero de operações 2 (Red-black tree): %ld\n", contador2);
+    printf("\nNúmero de operações 3 (B-tree): %ld\n", contador3);
+
+
+    // AVL tree
+    Arvore1* a2 = criar1();
+    contador1 =0;
+
+    // Red-black tree
+    Arvore2* b2 = criar2();
+    contador2 = 0;
+
+    // B-tree
+    ArvoreB3* c2 = criaArvore3(1);
+    contador3 = 0;
+
+
+    // generate random set of 1000 keys
+
+    
+
+    long unsigned quantityOperationsAVLTree[10][1000] = {};
+    long unsigned quantityOperationsRedBlackTree[10][1000] = {};
+    long unsigned quantityOperationsBTree[1][2] = {};
+
+    for (int executionTime = 0; executionTime < 10; executionTime++) {
+   
+        time_t t;
+        srand((unsigned) time(&t));
+
+        long unsigned keys[1000];
+        for (int i = 0; i < 1000; i++) {
+            keys[i] = rand();
+            int indexKeyFound = -1;
+            int index = 0;
+            while (indexKeyFound == -1) {
+                
+                if (keys[index] == keys[i]) {
+                    indexKeyFound = index;
+                } 
+                index++;
+            }
+            if (indexKeyFound != i) {
+                printf("repeated key");
+                i--;
+            }
+        }
+        
+        for (int quantityInsertionKeys = 0; quantityInsertionKeys < 1000; quantityInsertionKeys++) {
+            contador1 = 0;
+            contador2 = 0;
+            contador3 = 0;
+
+            // AVL tree
+            Arvore1* avlTree = criar1();
+            contador1 =0;
+
+            // Red-black tree
+            Arvore2* redBlackTree = criar2();
+            contador2 = 0;
+
+            // B-tree
+            ArvoreB3* bTree = criaArvore3(1);
+            contador3 = 0;
+
+            for (int i = 0; i <= quantityInsertionKeys; i++) {
+                adicionar1(avlTree,keys[i]); // MEMORY ISSUE
+                adicionar2(redBlackTree,keys[i]); 
+                adicionaChave3(bTree, keys[i]); 
+            }
+
+            free(avlTree);
+            free(redBlackTree);
+            free(bTree);
+
+            quantityOperationsAVLTree[executionTime][quantityInsertionKeys] = contador1;
+            quantityOperationsRedBlackTree[executionTime][quantityInsertionKeys] = contador2;
+            quantityOperationsBTree[executionTime][quantityInsertionKeys] = contador3;
+
+            printf("\nNúmero de operações 1: %ld", contador1);
+            printf("\nNúmero de operações 2: %ld", contador2);
+            printf("\nNúmero de operações 3 (%i, %i): %ld\n", executionTime, quantityInsertionKeys, quantityOperationsBTree[executionTime][quantityInsertionKeys]);
+        }
+
+    }
+       
+
+    char strAvarageQuantityOperations[100000] = "";
+    
+    FILE *fpt;
+    fpt = fopen("operationsQuantity.csv", "w+");
+
+   
+    for (int j=0; j<1000; j++) {
+
+        long unsigned quantityOperationsAVLTreeSum = 0;
+        long unsigned quantityOperationsRedBlackTreeSum = 0;
+        long unsigned quantityOperationsBTreeSum = 0;
+        
+        for (int k = 0; k < 10; k++) {
+            
+            quantityOperationsAVLTreeSum = quantityOperationsAVLTreeSum + quantityOperationsAVLTree[k][j];
+            quantityOperationsRedBlackTreeSum = quantityOperationsRedBlackTreeSum + quantityOperationsRedBlackTree[k][j];
+            quantityOperationsBTreeSum = quantityOperationsBTreeSum + quantityOperationsBTree[k][j];
+
+        }
+
+        float a1 = (float) quantityOperationsBTreeSum / 10;
+      
+        sprintf(strAvarageQuantityOperations, "%.3f, %.3f, %.3f \n",
+        (float) quantityOperationsAVLTreeSum / 10, (float) quantityOperationsRedBlackTreeSum / 10, (float) quantityOperationsBTreeSum / 10);
+        printf("\nLinha %d) %s", j, strAvarageQuantityOperations);
+
+        fprintf(fpt, strAvarageQuantityOperations);
+        
+
+    }
+
+    fclose(fpt);
+
 }
